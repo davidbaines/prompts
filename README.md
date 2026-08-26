@@ -1,12 +1,7 @@
 # Prompt Library
 
-A shared, versioned catalogue of prompts for our group. Everyone can browse and
-use what's here; a small curation crew reviews additions before they're merged.
-
-This repository is the **system of record**. Each prompt is one Markdown file
-under [`prompts/`](prompts/), carrying its own metadata and version history. Git
-tracks every change — who edited what, when, and the exact diff — so "store
-versions as the prompt evolves" is handled by the tool itself.
+A public catalogue of AI prompts. A person reviews new prompts before any are added.
+Each prompt is a Markdown file under [`prompts/`](prompts/), containing metadata and version history.
 
 ---
 
@@ -54,9 +49,9 @@ optional fields matter mainly for prompts that can run unattended.
 |-----------|----------|----------------------------------------------------------------------|
 | `title`   | yes      | Short human-readable name.                                           |
 | `id`      | yes      | Stable lowercase slug. Set once, never change it — other files and links may reference it. |
-| `purpose` | yes      | One sentence: what it does and when to use it. Powers quick scanning. |
+| `purpose` | yes      | One sentence: what it does and when to use it. This is the line people scan. |
 | `tags`    | yes      | Discovery keywords. Reuse existing tags where you can.               |
-| `models`  | yes      | Which model(s) it was tuned on, so users know what it's proven against. |
+| `models`  | yes      | Which model(s) it was tuned on, so users know what it's been tested against. |
 | `author`  | yes      | Who contributed it.                                                  |
 | `source`  | yes      | `original`, or where it was adapted from — this is how we tell prompts we wrote apart from ones we adopted. |
 | `version` | yes      | Integer. Bump on every meaningful change.                           |
@@ -130,7 +125,7 @@ the shared library — keep it in your own private notes instead.
 Two layers, both intentional:
 
 - **Git history** is authoritative. Every merge is a dated, attributed commit
-  with a full diff. Nothing is ever truly overwritten.
+  with a full diff. Nothing is ever overwritten.
 - **The `version` field + Changelog** in each file is the human-readable summary,
   so people who don't read Git can still see what changed and why.
 
