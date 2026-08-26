@@ -1,0 +1,37 @@
+name: Validate prompts
+
+on:
+  pull_request:
+    paths:
+      - "prompts/**"
+      - "scripts/**"
+      - ".github/workflows/validate.yml"
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate prompt files
+        run: python scripts/validate.py
+
+      - name: Check INDEX.md is up to date
+        run: |
+          python scripts/update_index.py
+          if ! git diff --quiet -- INDEX.md; then
+            echo "INDEX.md is out of date. Run 'python scripts/update_index.py' and commit the result."
+            git --no-pager diff -- INDEX.md
+            exit 1
+          fi
