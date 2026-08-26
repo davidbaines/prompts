@@ -27,18 +27,17 @@ Working and in place:
   curation tier, then produces a full table and a browse-by-tag list.
 - `INDEX.md`: generated, current as of the last run.
 - `templates/TEMPLATE.md`: the file a contributor copies to start a new prompt.
-- `README.md`: contributor guide, schema reference, placeholder convention, PII
-  checklist, naming and versioning rules.
-- `RANKING.md`: the scoring rationale for the initial twelve prompts.
-
-Not yet done (see Outstanding tasks):
-
-- `README.md` still lists the status values as `draft | reviewed | deprecated`.
-  The `proven` tier has been agreed but not written into that schema table.
-- No pull request template and no CI workflow yet, so the validator is not yet
-  wired to run automatically on a pull request.
-- `RANKING.md` sits at the repository root; the agreed structure places
-  supplementary docs under `docs/`.
+  It is the only template for now; if a second style is ever added (for example
+  an automation-specific template), give the files descriptive names at that
+  point rather than pre-emptively renaming this one.
+- `README.md`: contributor guide, schema reference (all four status tiers,
+  including `proven`), placeholder convention, PII checklist, naming and
+  versioning rules.
+- `docs/RANKING.md`: the scoring rationale for the initial twelve prompts.
+- `.github/pull_request_template.md`: the PII and proprietary-data checklist as
+  tick-boxes, plus the validator and index-regeneration steps.
+- `.github/workflows/validate.yml`: CI that runs `validate.py` on pull requests
+  and also fails if `INDEX.md` is out of date.
 
 ## Repository structure
 
@@ -57,14 +56,13 @@ prompt-library/
 ├── scripts/
 │   ├── validate.py
 │   └── update_index.py
-└── .github/                  # not yet created
+└── .github/
     ├── pull_request_template.md
     └── workflows/
         └── validate.yml
 ```
 
-The current tree differs in two ways, both listed as tasks below: `RANKING.md` is
-at the root rather than in `docs/`, and `.github/` does not exist yet.
+The current tree matches this layout.
 
 ## Metadata schema (authoritative)
 
@@ -151,20 +149,9 @@ Note: the scripts currently depend on PyYAML. If a zero-dependency version is
 wanted so they run on a plain Python install, the frontmatter parsing can be
 rewritten against the standard library. This has not been done.
 
-## Outstanding tasks (suggested order)
+## Outstanding tasks
 
-1. **Add `proven` to the README schema.** Update the `status` row in the schema
-   table in `README.md` to list all four values. Done when the README and the
-   schema in this file agree.
-2. **Move `RANKING.md` to `docs/RANKING.md`.** Create `docs/`, move the file,
-   and update any links to it. Done when no link points at the old path.
-3. **Add the pull request template.** Create `.github/pull_request_template.md`
-   containing the PII and proprietary-data checklist from `README.md` as
-   tick-boxes, so every contributor sees it. Done when a new PR shows the checklist.
-4. **Add CI to run the validator.** Create `.github/workflows/validate.yml` that
-   installs PyYAML and runs `python scripts/validate.py` on pull requests. Done
-   when a PR that breaks the schema fails its check.
-5. **Optional: split `CONTRIBUTING.md` out of `README.md`.** Move the contribution
+1. **Optional: split `CONTRIBUTING.md` out of `README.md`.** Move the contribution
    workflow and checklist into `CONTRIBUTING.md`, leaving `README.md` as the
    overview. Only worth it if the README grows unwieldy.
 
