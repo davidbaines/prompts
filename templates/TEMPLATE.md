@@ -21,45 +21,54 @@ triggers: []             # Any of [cron, email, slack, calendar]. Empty for inte
 ## Prompt
 
 <!--
-Write the prompt below. Use [SQUARE_BRACKET] placeholders for anything that would
-otherwise be a real name, number, client, internal figure, or document. NEVER
-paste real PII or proprietary data here. The canonical prompt must be safe to
-share. Real values are filled in privately at use time.
+Write the prompt in the ZERO-EDIT style: the user should copy it, paste their
+content, and send — with nothing to hand-edit.
+
+- Bake choices in as defaults with a spoken override, e.g. "in a warm, concise
+  tone, under 120 words — adjust if I ask", instead of [TONE] and [WORD_LIMIT]
+  fields. A prompt that needs five fields edited is slower than doing the task
+  by hand.
+- Exactly ONE required slot, placed LAST, named for the action:
+  [PASTE THE ... HERE]. Content last means: copy prompt, paste content, send.
+- Where the model may need to mark unknowns in its OUTPUT, instruct it to use
+  [SQUARE_BRACKET] markers — and note under Placeholders that this line is an
+  instruction, not a fill-in.
+- NEVER paste real PII or proprietary data anywhere in this file. The canonical
+  prompt must be safe to share; real values are supplied privately at use time.
 -->
 
 ```text
-You are [ROLE].
+You are [a role, written in plain words, not a placeholder].
 
-Context: [CONTEXT]
+[The task, with every choice stated as a default the user can override by
+saying so — tone, length, audience, format.]
 
-Task: [TASK]
+[What to do when information is missing: ask one question, or mark unknowns
+with [SQUARE_BRACKET] placeholders — never invent.]
 
-Constraints:
-- [CONSTRAINT_1]
-- [CONSTRAINT_2]
+The [content] follows:
 
-Output format: [OUTPUT_FORMAT]
+[PASTE THE CONTENT HERE]
 ```
 
 ## Placeholders
 
-<!-- Explain each placeholder and give a SAFE, non-sensitive example value. -->
+<!-- Usually a single row: the one paste slot. Keep example values SAFE. -->
 
-| Placeholder       | Meaning                        | Safe example              |
-|-------------------|--------------------------------|---------------------------|
-| `[ROLE]`          | Persona the model should adopt | a concise project manager |
-| `[CONTEXT]`       | Background the model needs     | notes from a team standup |
-| `[TASK]`          | The actual instruction         | summarise into 5 bullets  |
-| `[OUTPUT_FORMAT]` | Shape of the desired output    | markdown bullet list      |
+| Placeholder                | Meaning                                    | Safe example        |
+|----------------------------|--------------------------------------------|---------------------|
+| `[PASTE THE CONTENT HERE]` | The input — the only thing to supply       | *(private content)* |
 
 ## Usage & automation notes
 
 <!--
-Tips, gotchas, and what good or bad output looks like. If the prompt is
-schedulable or trigger-driven, say how it fires and on what (a new email, a Slack
-message, a cron time). Note any guard clause that matters when it runs unattended.
+Start with an "Adjusting it" bullet: the overrides a user can speak instead of
+editing ("formal", "under 60 words", "for the sales team"). Then tips, gotchas,
+and what good or bad output looks like. If the prompt suits a connector (mail,
+calendar) or a schedule/trigger, say how it runs and what replaces the paste.
 -->
 
+- **Adjusting it:** say it in the same message — "…", "…".
 -
 
 ## Example (optional)

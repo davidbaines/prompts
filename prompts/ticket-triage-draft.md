@@ -6,9 +6,9 @@ tags: [support, triage, drafting, ops, it-helpdesk]
 models: [claude, gpt, gemini]
 author: Curated set
 source: original
-version: 1
+version: 2
 created: 2026-08-25
-updated: 2026-08-25
+updated: 2026-08-27
 status: reviewed
 rank: 6
 automation: triggered
@@ -18,40 +18,44 @@ triggers: [email, slack]
 ## Prompt
 
 ```text
-You handle incoming [QUEUE_NAME] requests.
+You handle incoming support and helpdesk requests — adjust if I name a
+specific queue or give my own category list.
 
-New request:
-[TICKET]
-
-Reference material you may rely on (do not invent beyond it):
-[KNOWLEDGE_SOURCE]
-
-Return:
-1. Category: [CATEGORIES] — pick one.
+For the request below, return:
+1. Category: pick the closest of access / hardware / software / billing / other.
 2. Urgency: low / medium / high, with a one-line reason.
-3. Draft reply in a [TONE] tone that either resolves it or asks the one question
-   needed to proceed. Mark anything you're unsure of with [PLACEHOLDER].
-4. Escalate? Yes/No — say Yes if it needs a human decision or falls outside the
-   reference material, and state why.
+3. Draft reply in a friendly, clear tone that either resolves it or asks the
+   one question needed to proceed. Mark anything you're unsure of with a
+   [SQUARE_BRACKET] placeholder. Rely only on reference material included
+   below; if none is included, keep the reply procedural rather than factual.
+4. Escalate? Yes/No — say Yes if it needs a human decision or falls outside
+   the reference material, and state why.
+
+The request (and any reference material, labelled as such) follows:
+
+[PASTE THE TICKET HERE]
 ```
 
 ## Placeholders
 
-| Placeholder          | Meaning                        | Safe example                     |
-|----------------------|--------------------------------|----------------------------------|
-| `[QUEUE_NAME]`       | Which queue                    | IT helpdesk                      |
-| `[TICKET]`           | The incoming request           | *(supplied at run)*              |
-| `[KNOWLEDGE_SOURCE]` | Approved reference content     | *(FAQ / policy doc)*             |
-| `[CATEGORIES]`       | Allowed categories             | access, hardware, billing, other |
-| `[TONE]`             | Reply register                 | friendly and clear               |
+| Placeholder              | Meaning                                                    | Safe example        |
+|--------------------------|------------------------------------------------------------|---------------------|
+| `[PASTE THE TICKET HERE]` | The request, plus any FAQ/policy text you want it to rely on | *(private content)* |
+
+The `[SQUARE_BRACKET]` line is an instruction to the model, not something to
+fill in.
 
 ## Usage & automation notes
 
-- The "escalate" flag and "don't invent beyond the reference" clause keep it from
-  confidently answering things it shouldn't.
+- **Adjusting it:** say it in the same message — "this is the IT helpdesk
+  queue", "categories are onboarding, access, other", "formal tone".
+- The "escalate" flag and "rely only on included reference material" clause keep
+  it from confidently answering things it shouldn't.
 - **Triggered:** fire on a new ticket/email/Slack message; post the draft as an
   internal note for an agent to approve, not an auto-send to the requester.
 
 ## Changelog
 
+- **v2** (2026-08-27) — Restructured to zero-edit style: defaults inline, single
+  paste slot last. David Baines
 - **v1** (2026-08-25) — Initial version. Curated set

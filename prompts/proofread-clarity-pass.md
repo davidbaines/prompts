@@ -6,9 +6,9 @@ tags: [editing, proofreading, writing, clarity]
 models: [claude, gpt, gemini]
 author: Curated set
 source: original
-version: 1
+version: 2
 created: 2026-08-25
-updated: 2026-08-25
+updated: 2026-08-27
 status: reviewed
 rank: 12
 automation: interactive
@@ -19,27 +19,32 @@ triggers: []
 
 ```text
 Do a light editing pass on the text below.
-[TEXT]
 
 - Fix spelling, grammar and punctuation.
 - Improve clarity and flow only where it genuinely helps.
 - Keep my voice and word choices; don't rewrite for the sake of it.
 - Don't change meaning, add content, or inflate the length.
-- Use [BRITISH_OR_US] English.
+- Match the spelling convention the text already uses (British or US English);
+  if it's mixed, use the majority and note that you did.
 
-Return two things: the edited text, then a short list of the substantive changes
-(ignore trivial typo fixes) so I can see what you altered.
+Return two things: the edited text, then a short list of the substantive
+changes (ignore trivial typo fixes) so I can see what you altered.
+
+The text follows:
+
+[PASTE THE TEXT TO EDIT HERE]
 ```
 
 ## Placeholders
 
-| Placeholder        | Meaning              | Safe example |
-|--------------------|----------------------|--------------|
-| `[TEXT]`           | What to edit         | *(at use)*   |
-| `[BRITISH_OR_US]`  | Spelling convention  | British      |
+| Placeholder                    | Meaning                              | Safe example        |
+|--------------------------------|--------------------------------------|---------------------|
+| `[PASTE THE TEXT TO EDIT HERE]` | What to edit — the only thing to supply | *(private content)* |
 
 ## Usage & automation notes
 
+- **Adjusting it:** say it in the same message — "British English", "be
+  stricter", "it's a formal letter".
 - Asking for the change list keeps it honest and lets you reject over-editing.
 - Interactive: it edits what you're writing now, so there's nothing to schedule.
 - The "keep my voice / don't rewrite for the sake of it" instruction is what stops
@@ -47,4 +52,6 @@ Return two things: the edited text, then a short list of the substantive changes
 
 ## Changelog
 
+- **v2** (2026-08-27) — Restructured to zero-edit style: spelling convention
+  inferred from the text, single paste slot last. David Baines
 - **v1** (2026-08-25) — Initial version. Curated set
