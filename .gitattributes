@@ -1,0 +1,3 @@
+# The generated index must stay LF: CI regenerates it on a Linux runner and
+# fails the build if the committed bytes differ.
+INDEX.md text eol=lf
